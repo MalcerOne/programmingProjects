@@ -1,2 +1,5 @@
-# programmingProjects
-Personal projects for training programming
+# Programming projects
+
+## Personal projects made to train my skill of programming languages!
+
+
