@@ -8,7 +8,7 @@ from pytube import YouTube # Need to Donwload if you don't have it [pip install 
 #botão opção mp4 ou mp3 (video ou audio apenas)
 #, fileTypeString
 
-def Translate(youtubeLinkString, filetype, resolution):
+def Translate(youtubeLinkString, filetype, resolution, filename):
     """
     Translate the link of the youtube video into the selected file type.
     """
@@ -20,10 +20,13 @@ def Translate(youtubeLinkString, filetype, resolution):
     duration = (video.length/60) # Minutes
     thumbnail = video.thumbnail_url # Thumbnail
 
-    video.streams.filter(file_extension=f'{filetype}', resolution=f'{resolution}')
+    # Selecting stream with filters
+    print(video.streams.filter(file_extension=f'{filetype}', resolution=f'{resolution}'))
+    stream = video.streams.filter(file_extension=f'{filetype}', resolution=f'{resolution}')[0]
+    ### PROBLEMA VIDEO BAIXA MAS NAO TEM SOM!!!
+    # Download stream wih selected filename
+    stream.download(filename=f"{filename}")
+    print(stream.download(filename=f"{filename}"))
 
 
-    print(f"Título: {title}| Visualizações: {nViews}| Duração: {duration}| Streams: {video.streams.filter(file_extension='mp4', resolution='360p')}")
-
-
-Translate('https://www.youtube.com/watch?v=PPQ8m8xQAs8')
+Translate('https://www.youtube.com/watch?v=PPQ8m8xQAs8', "mp4", "1080p", "videoNovo")
