@@ -3,26 +3,30 @@
 This program provides a video from Youtube to be downloaded in the local machine.
 
 Using the pytube library for this job of translating the url of the video into mp3 and mp4 files.
-
 """
 
-import os
+# Import necessary modules
+import os, sys, shutil, math, datetime, platform
 import shutil
 import math
 import datetime
 from pytube import YouTube # Need to Donwload if you don't have it (pip install git+https://github.com/ssuwani/pytube)
+from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
+from PySide2.QtWidgets import *
+from ui_splash_screen import Ui_SplashScreen #Splash Screen
+from ui_main import Ui_MainWindow #Main windows
 
+# Infos about the program
 __author__ = "Rafael Seicali Malcervelli"
 __maintainer__ = "Rafael Seicali Malcervelli"
 __email__ = "r.malcervelli@gmail.com"
 
-#Pesquisar como fazer isso
-def Loading():
-    """
-    Loading function animation while downloading the file.
-    """
-    return None
+# Globals
+counter = 0
 
+# Function to translate the url to file
 def Translate(youtubeLinkString, filetype, resolution, filename):
     """
     Translate the link of the youtube video into the selected file type.
@@ -99,19 +103,90 @@ def Translate(youtubeLinkString, filetype, resolution, filename):
             else:
                 streamBetter.download(filename=f"{filename}")
 
-# Main function
-def main():
-    try:
-        Translate("https://www.youtube.com/watch?v=BSzSn-PRdtI", "mp4", "360p", "beautifulMistakes")
+# Main
+class MainWindow(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.ui.labelLoadingDownload.setText("<strong>Set</strong> parameters and then click on submit!")
 
-    except Exception as erro:
-        print("Error:")
-        print(erro)
+    def downloadFile(self):
+        # Light file
+        if self.ui.checkBoxLight.isChecked:
+            self.ui.pushButtonSubmit.clicked.connect(Translate(self.ui.textEditUrlYoutube.__str__, self.ui.spinBoxFileType.__str__, "light", self.ui.textEditFileName))
 
+        # Medium file
+        elif self.ui.checkBoxMedium.isChecked:
+            self.ui.pushButtonSubmit.clicked.connect(Translate(self.ui.textEditUrlYoutube.__str__, self.ui.spinBoxFileType.__str__, "medium", self.ui.textEditFileName))
 
-# Script for console running
+        # Better file
+        elif self.ui.checkBoxBetter.isChecked:
+            self.ui.pushButtonSubmit.clicked.connect(Translate(self.ui.textEditUrlYoutube.__str__, self.ui.spinBoxFileType.__str__, "better", self.ui.textEditFileName))
+    
+
+# Splash screen
+class SplashScreen(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_SplashScreen()
+        self.ui.setupUi(self)
+
+        # UI - Interface codes
+
+        # Remove title bar
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        # Drop shadow effect
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(20)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 60))
+        self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
+
+        # QTimer - start
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.progress)
+        self.timer.start(35) # Timer in miliseconds
+
+        # Changing description
+        # Initial Text
+        self.ui.label_description.setText("<strong>Welcome</strong> to my application!")
+
+        # Change Texts
+        QtCore.QTimer.singleShot(1500, lambda: self.ui.label_description.setText("<strong>Loading</strong> database"))
+        QtCore.QTimer.singleShot(3000, lambda: self.ui.label_description.setText("<strong>Loading</strong> user interface"))
+
+        self.show()
+
+    # Functions
+    def progress(self):
+        global counter
+
+        # Set value of progress bar
+        self.ui.progressBar.setValue(counter)
+
+        # Close splash screen and open application
+        if counter > 100:
+            # Stop timer
+            self.timer.stop()
+
+            # Show main window
+            self.main = MainWindow()
+            self.main.show()
+
+            # Close splash screen
+            self.close()
+
+        # Increase counter
+        counter += 1
+
 if __name__ == "__main__":
-    main()
-        
-
-
+    app = QApplication(sys.argv)
+    window = SplashScreen()
+    print("oi2")
+    # app.downloadFile()
+    sys.exit(app.exec_())
+    
