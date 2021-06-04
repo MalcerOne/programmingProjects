@@ -7,7 +7,7 @@ Made with Python and some libraries, including pytube.
 This is a personal project made only to get experience in the programming world. 
   
 ## How to run?
-_**You need Python installed to execute this code**_
+_**You need Python installed to execute this code!**_
 
 Here you have some instructions about how to run the file and download a youtube video.
 * To run the program: ```python youtubeToMp3.py ```
