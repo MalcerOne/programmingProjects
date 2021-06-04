@@ -10,4 +10,4 @@ This is a personal project made only to get experience in the programming world.
 _**You need Python installed to execute this code!**_
 
 Here you have some instructions about how to run the file and download a youtube video.
-* To run the program: ```python youtubeToMp3.py ```
+* To run the program: ```sh python youtubeToMp3.py```
