@@ -1,5 +1,6 @@
 # **Youtube to MP3/MP4 file**
-<img src="https://onlinevideoconverter.pro/img/mp31full.png" alt="Youtube to MP3 image" align="right" width="200" height="200">
+<img src="https://onlinevideoconverter.pro/img/mp31full.png" alt="Youtube to MP3 image" align="right" width="160" height="160">
+
 Translate a **Youtube video** by the url to a *mp3/mp4 file*  
 downloaded to you local machine! Made with Python and some  
 libraries, including pytube. This is a personal project  
