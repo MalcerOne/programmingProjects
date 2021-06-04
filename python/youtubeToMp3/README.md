@@ -8,3 +8,4 @@ This is a personal project made only to get experience in the programming world.
   
 ## How to run?
 Here you have some instructions about how to run the file and download a youtube video:
+* If you have python installed: ```python youtubeToMp3.py ```
