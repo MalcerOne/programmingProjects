@@ -1,6 +1,6 @@
 # **Youtube to MP3/MP4 file**
 <p align="right"> 
-  <img src="https://onlinevideoconverter.pro/img/mp31full.png" width="200" height="200">
+  <img src="https://onlinevideoconverter.pro/img/mp31full.png" width="50" height="50">
 </p>
 
 Translate a **Youtube video** by the url to a *mp3/mp4 file*  
